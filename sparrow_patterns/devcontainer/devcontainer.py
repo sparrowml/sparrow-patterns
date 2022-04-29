@@ -1,8 +1,40 @@
 import os
 from pathlib import Path
 
+from jinja2 import Environment
 
-def devcontainer(project_name: str) -> None:
-    """Write a .devcontainer directory for the project."""
-    devcontainer_directory = Path(__file__).parent / ".devcontainer"
-    print(os.listdir(devcontainer_directory))
+from sparrow_patterns.utils import get_source_directory
+
+
+def devcontainer(
+    project_name: str, aws_profile: str = "sparrow", project_directory: str = "."
+) -> None:
+    """
+    Write a .devcontainer directory for the project.
+
+    Parameters
+    ----------
+    project_name
+        The slug for the project. Should be the same as the GitHub repo.
+    aws_profile
+        The value to use for AWS_PROFILE
+    project_directory
+        Where to create the .devcontainer folder. Defaults to working directory.
+    """
+    env = Environment()
+    folder = ".devcontainer"
+    source_directory = get_source_directory(project_name)
+    template_devcontainer_directory = Path(__file__).parent / folder
+    output_devcontainer_directory = Path(project_directory) / folder
+    output_devcontainer_directory.mkdir(exist_ok=True)
+    template_variables = dict(
+        project_name=project_name,
+        source_directory=source_directory,
+        aws_profile=aws_profile,
+    )
+    for fname in os.listdir(template_devcontainer_directory):
+        output_path = output_devcontainer_directory / fname
+        with open(template_devcontainer_directory / fname) as f:
+            template = env.from_string(f.read())
+        with open(output_path, "w") as f:
+            f.write(template.render(**template_variables))
