@@ -39,6 +39,7 @@
 		"ms-python.vscode-pylance"
 	],
 	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached,readonly",
 		"source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached,readonly",
 		"source=projectname-bashhistory,target=/commandhistory,type=volume"
 	],

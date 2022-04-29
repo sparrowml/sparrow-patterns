@@ -1,8 +1,8 @@
 import fire
 
-from .example import hello
+from .devcontainer import devcontainer
 
 
 def main() -> None:
     """Call CLI commands."""
-    fire.Fire({"hello": hello})
+    fire.Fire({"devcontainer": devcontainer})
