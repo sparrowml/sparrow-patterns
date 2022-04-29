@@ -63,8 +63,7 @@ html_static_path = ["_static"]
 # Custom settings
 autosummary_generate = True
 add_module_names = False
-autodoc_type_aliases = {
-}
+autodoc_type_aliases = {}
 html_theme_options = {
     "sidebar_width": "30%",
     "page_width": "80%",
