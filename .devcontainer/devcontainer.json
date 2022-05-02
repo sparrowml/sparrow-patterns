@@ -14,13 +14,13 @@
 		// black
 		"python.formatting.blackPath": "/usr/local/bin/black",
 		"python.formatting.provider": "black",
-		"editor.formatOnSave": true,
 		// isort
 		"python.sortImports.path": "/usr/local/bin/isort",
 		"[python]": {
 			"editor.codeActionsOnSave": {
 				"source.organizeImports": true
-			}
+			},
+			"editor.formatOnSave": true,
 		},
 		// mypy
 		"python.linting.mypyEnabled": true,
