@@ -7,7 +7,7 @@ from sparrow_patterns.utils import get_source_directory
 
 
 def devcontainer(
-    project_name: str, aws_profile: str = "sparrow", project_directory: str = "."
+    project_name: str, aws: bool = False, project_directory: str = "."
 ) -> None:
     """
     Write a .devcontainer directory for the project.
@@ -16,8 +16,8 @@ def devcontainer(
     ----------
     project_name
         The slug for the project. Should be the same as the GitHub repo.
-    aws_profile
-        The value to use for AWS_PROFILE
+    aws
+        Whether to set up AWS access
     project_directory
         Where to create the .devcontainer folder. Defaults to working directory.
     """
@@ -30,7 +30,7 @@ def devcontainer(
     template_variables = dict(
         project_name=project_name,
         source_directory=source_directory,
-        aws_profile=aws_profile,
+        aws=aws,
     )
     for fname in os.listdir(template_devcontainer_directory):
         output_path = output_devcontainer_directory / fname
