@@ -21,7 +21,7 @@ def devcontainer(
     project_directory
         Where to create the .devcontainer folder. Defaults to working directory.
     """
-    env = Environment()
+    env = Environment(autoescape=True)
     folder = ".devcontainer"
     source_directory = get_source_directory(project_name)
     template_devcontainer_directory = Path(__file__).parent / folder
