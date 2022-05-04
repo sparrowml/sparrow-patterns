@@ -11,7 +11,7 @@ def github(project_directory: str = ".") -> None:
         Where to create the .github folder. Defaults to working directory.
     """
     template_directory = Path(__file__).parent / "templates"
-    output_directory = Path(project_directory) / ".vscode"
+    output_directory = Path(project_directory) / ".github/workflows"
     filename = "build.yml"
     with open(template_directory / filename) as f:
         file_string = f.read()
