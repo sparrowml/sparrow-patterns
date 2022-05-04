@@ -11,7 +11,8 @@ def poetry(
     version: str = "0.1.0",
     description: str = "",
     license: Optional[str] = None,
-    authors: str = "Sparrow Computing <ben@sparrow.dev>",
+    author_name: str = "Sparrow Computing",
+    author_email: str = "ben@sparrow.dev",
     cli: bool = False,
     gpu: bool = False,
     project_directory: str = ".",
@@ -29,6 +30,10 @@ def poetry(
         A description of the project. Defaults to blank.
     license
         The license of the package. Optional.
+    author_name
+        Project author name
+    author_email
+        Project author email
     cli
         Whether this is for a CLI.
     gpu
@@ -46,7 +51,8 @@ def poetry(
         version=version,
         description=description,
         license=license,
-        authors=authors,
+        author_name=author_name,
+        author_email=author_email,
         cli=cli,
         gpu=gpu,
     )
