@@ -7,7 +7,10 @@ from sparrow_patterns.utils import get_source_directory
 
 
 def devcontainer(
-    project_name: str, aws: bool = False, project_directory: str = "."
+    project_name: str,
+    package: bool = False,
+    gpu: bool = False,
+    project_directory: str = ".",
 ) -> None:
     """
     Write a .devcontainer directory for the project.
@@ -16,8 +19,10 @@ def devcontainer(
     ----------
     project_name
         The slug for the project. Should be the same as the GitHub repo.
-    aws
-        Whether to set up AWS access
+    package
+        Whether this is for a Python package
+    gpu
+        Whether to make the GPU available
     project_directory
         Where to create the .devcontainer folder. Defaults to working directory.
     """
@@ -30,9 +35,12 @@ def devcontainer(
     template_variables = dict(
         project_name=project_name,
         source_directory=source_directory,
-        aws=aws,
+        package=package,
+        gpu=gpu,
     )
     for fname in os.listdir(template_devcontainer_directory):
+        if package and fname in (".env.example", ".gitignore"):
+            continue
         output_path = output_devcontainer_directory / fname
         with open(template_devcontainer_directory / fname) as f:
             template = env.from_string(f.read())
