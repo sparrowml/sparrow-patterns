@@ -12,7 +12,7 @@ authors = ["Sparrow Computing <ben@sparrow.dev>"]
 license = ""
 repository = "https://github.com/sparrowml/sparrow-patterns"
 homepage = "https://github.com/sparrowml/sparrow-patterns"
-include = ["sparrow_patterns/devcontainer/.devcontainer"]
+include = ["sparrow_patterns/devcontainer/templates", "sparrow_patterns/dockerfile/templates"]
 
 # Keywords description https://python-poetry.org/docs/pyproject/#keywords
 keywords = []  #! Update me

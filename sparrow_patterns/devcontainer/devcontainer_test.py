@@ -21,7 +21,7 @@ def test_project_name_converts_to_source_directory():
             assert source_directory in f.read()
 
 
-def test_project_adds_env_var_and_directory():
+def test_non_package_adds_env_var_and_directory():
     with tempfile.TemporaryDirectory() as project_directory:
         devcontainer(
             project_name="hello-world",
