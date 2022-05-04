@@ -108,6 +108,7 @@ enable = ["unused-import"]
 [tool.pydocstyle]
 convention = "numpy"
 match = '((?!_test).)*\.py'
+match-dir = '^(?!templates).*'
 add-ignore = "D100"
 
 [tool.pytest.ini_options]

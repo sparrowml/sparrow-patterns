@@ -1,2 +1,2 @@
-"""Set up GitHub actions"""
+"""Set up GitHub actions."""
 from .github import github
