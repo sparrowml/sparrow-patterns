@@ -2,6 +2,7 @@ import fire
 
 from .devcontainer import devcontainer
 from .dockerfile import dockerfile
+from .github import github
 from .poetry import poetry
 
 
@@ -11,6 +12,7 @@ def main() -> None:
         {
             "devcontainer": devcontainer,
             "dockerfile": dockerfile,
+            "github": github,
             "poetry": poetry,
         }
     )

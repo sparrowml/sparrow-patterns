@@ -16,7 +16,7 @@ def poetry(
     project_directory: str = ".",
 ) -> None:
     """
-    Write a .devcontainer directory for the project.
+    Write a pyproject.toml config for the project.
 
     Parameters
     ----------
