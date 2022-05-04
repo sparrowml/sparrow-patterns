@@ -4,6 +4,7 @@ from .devcontainer import devcontainer
 from .dockerfile import dockerfile
 from .github import github
 from .poetry import poetry
+from .vscode import vscode
 
 
 def main() -> None:
@@ -14,5 +15,6 @@ def main() -> None:
             "dockerfile": dockerfile,
             "github": github,
             "poetry": poetry,
+            "vscode": vscode,
         }
     )
