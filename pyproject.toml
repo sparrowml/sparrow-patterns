@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "sparrow-patterns"
-version = "0.1.2"
+version = "0.2.0"
 description = "A CLI for updating code patterns in Python projects"
 readme = "README.md"
 authors = ["Sparrow Computing <ben@sparrow.dev>"]
@@ -16,6 +16,7 @@ include = [
   "sparrow_patterns/devcontainer/templates",
   "sparrow_patterns/dockerfile/templates",
   "sparrow_patterns/github/templates",
+  "sparrow_patterns/makefile/templates",
   "sparrow_patterns/poetry/templates",
   "sparrow_patterns/vscode/templates",
 ]
