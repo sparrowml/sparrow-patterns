@@ -11,6 +11,7 @@ def poetry(
     version: str = "0.1.0",
     description: str = "",
     license: Optional[str] = None,
+    authors: str = "Sparrow Computing <ben@sparrow.dev>",
     cli: bool = False,
     gpu: bool = False,
     project_directory: str = ".",
@@ -45,6 +46,7 @@ def poetry(
         version=version,
         description=description,
         license=license,
+        authors=authors,
         cli=cli,
         gpu=gpu,
     )
