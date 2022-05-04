@@ -52,5 +52,6 @@
         "--ipc=host",{% if gpu %}     
         "--gpus=all",{% endif %}{% if not package %}
         "--env-file=.devcontainer/.env"{% endif %}
-    ]
+    ],
+    "postCreateCommand": "pip install -e .",
 }
