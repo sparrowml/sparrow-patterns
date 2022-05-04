@@ -27,10 +27,9 @@ def devcontainer(
         Where to create the .devcontainer folder. Defaults to working directory.
     """
     env = Environment(autoescape=True)
-    folder = ".devcontainer"
     source_directory = get_source_directory(project_name)
-    template_devcontainer_directory = Path(__file__).parent / folder
-    output_devcontainer_directory = Path(project_directory) / folder
+    template_devcontainer_directory = Path(__file__).parent / "templates"
+    output_devcontainer_directory = Path(project_directory) / ".devcontainer"
     output_devcontainer_directory.mkdir(exist_ok=True)
     template_variables = dict(
         project_name=project_name,
