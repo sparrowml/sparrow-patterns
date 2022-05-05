@@ -15,13 +15,13 @@ test:
 .PHONY: codestyle
 codestyle:
 	poetry run pyupgrade --exit-zero-even-if-changed --py39-plus **/*.py
-	poetry run isort --settings-path pyproject.toml ./
-	poetry run black --config pyproject.toml ./
+	poetry run isort --settings-path pyproject.toml {{ source_directory }}
+	poetry run black --config pyproject.toml {{ source_directory }}
 
 .PHONY: check-codestyle
 check-codestyle:
-	poetry run isort --diff --check-only ./
-	poetry run black --diff --check ./
+	poetry run isort --diff --check-only {{ source_directory }}
+	poetry run black --diff --check {{ source_directory }}
 	poetry run pylint {{ source_directory }}
 
 .PHONY: mypy
@@ -42,7 +42,7 @@ docker-build:
 	@echo Building docker $(IMAGE):$(VERSION) ...
 	docker build \
 		-t $(IMAGE):$(VERSION) . \
-		-f ./docker/Dockerfile --no-cache
+		--no-cache
 
 # Example: make docker-remove VERSION=latest
 # Example: make docker-remove IMAGE=some_name VERSION=0.1.0
