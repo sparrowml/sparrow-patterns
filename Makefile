@@ -43,7 +43,6 @@ check-codestyle:
 	poetry run isort --diff --check-only ./
 	poetry run black --diff --check ./
 	poetry run pylint sparrow_patterns
-	poetry run pydocstyle
 
 .PHONY: mypy
 mypy:

@@ -1,5 +1,0 @@
-*****
-Index
-*****
-
-* :ref:`genindex`

@@ -4,41 +4,48 @@ requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "sparrow-patterns"
-version = "0.2.0"
-description = "A CLI for updating code patterns in Python projects"
-readme = "README.md"
-authors = ["Sparrow Computing <ben@sparrow.dev>"]
-license = ""
-repository = "https://github.com/sparrowml/sparrow-patterns"
-homepage = "https://github.com/sparrowml/sparrow-patterns"
-include = [
-  "sparrow_patterns/devcontainer/templates",
-  "sparrow_patterns/dockerfile/templates",
-  "sparrow_patterns/github/templates",
-  "sparrow_patterns/makefile/templates",
-  "sparrow_patterns/poetry/templates",
-  "sparrow_patterns/vscode/templates",
-]
+name = "{{ project_name }}"
+version = "{{ version }}"
+description = "{{ description }}"
+license = "{% if license %}{{ license }}{% endif %}"
+authors = ["{{ author_name }} <{{ author_email }}>"]
 
-# Keywords description https://python-poetry.org/docs/pyproject/#keywords
-keywords = []  #! Update me
+[[tool.poetry.source]]
+url = "https://pypi.org/simple/"
+name = "public-pypi"
 
 [[tool.poetry.source]]
 url = "https://pypi.fury.io/sparrow/"
 name = "sparrow"
+secondary = true{% if cli %}
 
 [tool.poetry.scripts]
 # Entry points for the package https://python-poetry.org/docs/pyproject/#scripts
-"sparrow-patterns" = "sparrow_patterns.__main__:main"
+"{{ project_name }}" = "{{ source_directory }}.__main__:main"{% endif %}
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.11"
-
-typer = {extras = ["all"], version = "^0.4.0"}
-rich = "^10.14.0"
-fire = "^0.4.0"
-Jinja2 = "^3.1.2"
+python = ">=3.9,<3.11"{% if gpu %}
+aioboto3 = "9.5.0"
+aiobotocore = "2.2.0"
+boto3 = "1.21.21"
+botocore = "1.24.21"
+s3fs = "2022.3.0"
+s3transfer = "0.5.2"
+dvc = {"extras" = ["s3"], version = "^2.10.2"}
+sparrow-datums = "^0.5.5"
+torch = { url = "https://download.pytorch.org/whl/cu113/torch-1.10.0%2Bcu113-cp39-cp39-linux_x86_64.whl" }
+torchvision = { url = "https://download.pytorch.org/whl/cu113/torchvision-0.11.0%2Bcu113-cp39-cp39-linux_x86_64.whl" }
+onnxruntime = "^1.11.0"
+pytorch-lightning = "^1.6.0"
+sparrow-tracky = "^0.2.1"
+imageio = "^2.16.1"
+imageio-ffmpeg = "^0.4.5"
+darwin-py = "^0.7.12"
+matplotlib = "^3.5.1"
+wandb = "^0.12.11"
+imgaug = "^0.4.0"
+pillow = "~9.0.1"{% endif %}{% if cli %}
+fire = "^0.4.0"{% endif %}
 
 [tool.poetry.dev-dependencies]
 bandit = "^1.7.1"
@@ -68,14 +75,11 @@ exclude = '''
     \.git
     | \.hg
     | \.mypy_cache
-    | \.tox
-    | \.venv
     | _build
     | buck-out
     | build
     | dist
     | env
-    | venv
 )/
 '''
 
@@ -115,7 +119,6 @@ enable = ["unused-import"]
 [tool.pydocstyle]
 convention = "numpy"
 match = '((?!_test).)*\.py'
-match-dir = '^(?!templates).*'
 add-ignore = "D100"
 
 [tool.pytest.ini_options]
@@ -136,7 +139,7 @@ addopts = [
 source = ["tests"]
 
 [coverage.paths]
-source = "sparrow-patterns"
+source = "{{ source_directory }}"
 
 [coverage.run]
 branch = true
