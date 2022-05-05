@@ -9,6 +9,7 @@ version = "{{ version }}"
 description = "{{ description }}"
 license = "{% if license %}{{ license }}{% endif %}"
 authors = ["{{ author_name }} <{{ author_email }}>"]
+packages = [{ include = "{{ source_directory }}" }]
 
 [[tool.poetry.source]]
 url = "https://pypi.org/simple/"
