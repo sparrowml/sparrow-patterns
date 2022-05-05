@@ -11,8 +11,13 @@ license = "{% if license %}{{ license }}{% endif %}"
 authors = ["{{ author_name }} <{{ author_email }}>"]
 
 [[tool.poetry.source]]
+url = "https://pypi.org/simple/"
+name = "public-pypi"
+
+[[tool.poetry.source]]
 url = "https://pypi.fury.io/sparrow/"
-name = "sparrow"{% if cli %}
+name = "sparrow"
+secondary = true{% if cli %}
 
 [tool.poetry.scripts]
 # Entry points for the package https://python-poetry.org/docs/pyproject/#scripts
