@@ -31,6 +31,10 @@ RUN ln -s /usr/bin/python3.9 /usr/local/bin/python
 RUN ln -s /usr/local/bin/pip3.9 /usr/local/bin/pip
 RUN pip install --upgrade pip{% endif %}
 
+# Allow root for Jupyter notebooks
+RUN mkdir /root/.jupyter
+RUN echo "c.NotebookApp.allow_root = True" > /root/.jupyter/jupyter_notebook_config.py
+
 # Install Poetry
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_HOME=/opt/poetry python && \
     cd /usr/local/bin && \
