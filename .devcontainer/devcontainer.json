@@ -17,9 +17,6 @@
 		// isort
 		"python.sortImports.path": "/usr/local/bin/isort",
 		"[python]": {
-			"editor.codeActionsOnSave": {
-				"source.organizeImports": true
-			},
 			"editor.formatOnSave": true,
 		},
 		// pylint
@@ -30,6 +27,9 @@
 			"sparrow_patterns"
 		],
 		"python.testing.pytestEnabled": true,
+		"[jsonc]": {
+			"editor.formatOnSave": false
+		},
 	},
 	"extensions": [
 		"ms-python.python",
