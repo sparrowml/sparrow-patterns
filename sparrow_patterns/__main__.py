@@ -10,6 +10,7 @@ from .makefile import makefile
 from .notebooks import notebooks
 from .package import package
 from .poetry import poetry
+from .project import project
 from .vscode import vscode
 
 
@@ -25,6 +26,7 @@ def main() -> None:
             "notebooks": notebooks,
             "package": package,
             "poetry": poetry,
+            "project": project,
             "vscode": vscode,
         }
     )

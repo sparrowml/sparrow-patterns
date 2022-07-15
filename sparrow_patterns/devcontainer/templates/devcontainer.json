@@ -14,17 +14,11 @@
         // black
         "python.formatting.blackPath": "/usr/local/bin/black",
         "python.formatting.provider": "black",
-        "editor.formatOnSave": true,
+        "[python]": {
+            "editor.formatOnSave": true,
+        },
         // isort
         "python.sortImports.path": "/usr/local/bin/isort",
-        "[python]": {
-            "editor.codeActionsOnSave": {
-                "source.organizeImports": true
-            }
-        },
-        // mypy
-        "python.linting.mypyEnabled": true,
-        "python.linting.mypyPath": "/usr/local/bin/mypy",
         // pylint
         "python.linting.pylintEnabled": true,
         "python.linting.pylintPath": "/usr/local/bin/pylint",

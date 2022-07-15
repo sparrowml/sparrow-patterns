@@ -17,14 +17,8 @@
 		// isort
 		"python.sortImports.path": "/usr/local/bin/isort",
 		"[python]": {
-			"editor.codeActionsOnSave": {
-				"source.organizeImports": true
-			},
 			"editor.formatOnSave": true,
 		},
-		// mypy
-		"python.linting.mypyEnabled": true,
-		"python.linting.mypyPath": "/usr/local/bin/mypy",
 		// pylint
 		"python.linting.pylintEnabled": true,
 		"python.linting.pylintPath": "/usr/local/bin/pylint",
@@ -33,6 +27,9 @@
 			"sparrow_patterns"
 		],
 		"python.testing.pytestEnabled": true,
+		"[jsonc]": {
+			"editor.formatOnSave": false
+		},
 	},
 	"extensions": [
 		"ms-python.python",
@@ -45,5 +42,5 @@
 	],
 	"workspaceFolder": "/code",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/code,type=bind,consistency=cached",
-    "postCreateCommand": "pip install -e .",
+	"postCreateCommand": "pip install -e .",
 }
