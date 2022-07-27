@@ -13,19 +13,14 @@ packages = [{ include = "{{ source_directory }}" }]
 
 [[tool.poetry.source]]
 url = "https://pypi.org/simple/"
-name = "public-pypi"
-
-[[tool.poetry.source]]
-url = "https://pypi.fury.io/sparrow/"
-name = "sparrow"
-secondary = true{% if cli %}
+name = "public-pypi"{% if cli %}
 
 [tool.poetry.scripts]
 # Entry points for the package https://python-poetry.org/docs/pyproject/#scripts
 "{{ project_name }}" = "{{ source_directory }}.__main__:main"{% endif %}
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.11"{% if gpu %}
+python = ">=3.8,<3.11"{% if gpu %}
 aioboto3 = "9.5.0"
 aiobotocore = "2.2.0"
 boto3 = "1.21.21"
