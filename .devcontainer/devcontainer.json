@@ -18,6 +18,10 @@
 		"python.sortImports.path": "/usr/local/bin/isort",
 		"[python]": {
 			"editor.formatOnSave": true,
+            "editor.codeActionsOnSave": {
+                "source.organizeImports": true
+            },
+        },
 		},
 		// pylint
 		"python.linting.pylintEnabled": true,
