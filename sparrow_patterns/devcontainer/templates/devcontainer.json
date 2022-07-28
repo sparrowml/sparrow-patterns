@@ -16,6 +16,9 @@
         "python.formatting.provider": "black",
         "[python]": {
             "editor.formatOnSave": true,
+            "editor.codeActionsOnSave": {
+                "source.organizeImports": true
+            },
         },
         // isort
         "python.sortImports.path": "/usr/local/bin/isort",
