@@ -9,6 +9,7 @@ from .notebooks import notebooks
 from .package import package
 from .poetry import poetry
 from .project import project
+from .readme import readme
 from .vscode import vscode
 
 
@@ -25,6 +26,7 @@ def main() -> None:
             "package": package,
             "poetry": poetry,
             "project": project,
+            "readme": readme,
             "vscode": vscode,
         }
     )
