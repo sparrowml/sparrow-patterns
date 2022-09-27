@@ -47,7 +47,12 @@ def project(
         gpu=gpu,
         project_directory=project_dir_string,
     )
-    dockerfile(gpu=gpu, deepstream=deepstream, project_directory=project_dir_string)
+    dockerfile(
+        project_name,
+        gpu=gpu,
+        deepstream=deepstream,
+        project_directory=project_dir_string,
+    )
     gitignore(project_dir_string)
     makefile(project_name, project_directory=project_dir_string)
     readme(project_name, project_directory=project_dir_string)

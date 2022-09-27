@@ -45,7 +45,7 @@ def package(
         gpu=False,
         project_directory=project_dir_string,
     )
-    dockerfile(gpu=False, project_directory=project_dir_string)
+    dockerfile(project_name, project_directory=project_dir_string)
     github(project_dir_string)
     gitignore(project_dir_string)
     makefile(project_name, project_directory=project_dir_string)
