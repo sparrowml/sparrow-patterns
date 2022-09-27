@@ -3,12 +3,12 @@ from typing import Optional
 
 from slugify import slugify
 
+from .dependencies import dependencies
 from .devcontainer import devcontainer
 from .dockerfile import dockerfile
 from .github import github
 from .gitignore import gitignore
 from .makefile import makefile
-from .poetry import poetry
 from .utils import get_source_directory
 from .vscode import vscode
 
@@ -28,10 +28,17 @@ def package(
     project_directory.mkdir(exist_ok=True, parents=True)
     source_directory = project_directory / get_source_directory(project_name)
     source_directory.mkdir(exist_ok=True)
-    (source_directory / "__init__.py").touch()
-    if cli:
-        (source_directory / "__main__.py").touch()
     project_dir_string = str(project_directory)
+    dependencies(
+        project_name,
+        version=version,
+        description=description,
+        license=license,
+        author_name=author_name,
+        author_email=author_email,
+        cli=cli,
+        project_directory=project_dir_string,
+    )
     devcontainer(
         project_name,
         package=True,
@@ -42,14 +49,4 @@ def package(
     github(project_dir_string)
     gitignore(project_dir_string)
     makefile(project_name, project_directory=project_dir_string)
-    poetry(
-        project_name,
-        version=version,
-        description=description,
-        license=license,
-        author_name=author_name,
-        author_email=author_email,
-        cli=cli,
-        project_directory=project_dir_string,
-    )
     vscode(project_dir_string)
