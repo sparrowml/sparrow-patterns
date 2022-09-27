@@ -8,6 +8,7 @@ from .dockerfile import dockerfile
 from .gitignore import gitignore
 from .makefile import makefile
 from .poetry import poetry
+from .readme import readme
 from .utils import get_source_directory
 from .vscode import vscode
 
@@ -42,6 +43,7 @@ def project(
     dockerfile(gpu=gpu, deepstream=deepstream, project_directory=project_dir_string)
     gitignore(project_dir_string)
     makefile(project_name, project_directory=project_dir_string)
+    readme(project_name, project_directory=project_dir_string)
     poetry(
         project_name,
         version=version,
