@@ -13,9 +13,9 @@ test:
 
 .PHONY: check-codestyle
 check-codestyle:
-	poetry run isort --diff --check-only sparrow_patterns
-	poetry run black --diff --check sparrow_patterns
-	poetry run pylint sparrow_patterns
+	isort --diff --check-only sparrow_patterns
+	black --diff --check sparrow_patterns
+	pylint sparrow_patterns
 
 #* Docker
 # Example: make docker-build VERSION=latest

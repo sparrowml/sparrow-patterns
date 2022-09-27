@@ -13,9 +13,9 @@ test:
 
 .PHONY: check-codestyle
 check-codestyle:
-	poetry run isort --diff --check-only {{ source_directory }}
-	poetry run black --diff --check {{ source_directory }}
-	poetry run pylint {{ source_directory }}
+	isort --diff --check-only {{ source_directory }}
+	black --diff --check {{ source_directory }}
+	pylint {{ source_directory }}
 
 #* Docker
 # Example: make docker-build VERSION=latest
