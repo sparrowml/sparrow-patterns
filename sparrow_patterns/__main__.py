@@ -1,7 +1,5 @@
 import fire
 
-from sparrow_patterns.notebooks.notebooks import notebooks
-
 from .devcontainer import devcontainer
 from .dockerfile import dockerfile
 from .github import github
