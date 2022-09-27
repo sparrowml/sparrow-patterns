@@ -6,6 +6,14 @@ from jinja2 import Environment
 
 from sparrow_patterns.utils import get_source_directory
 
+MAIN_TEMPLATE = """import fire
+
+
+def main() -> None:
+    \"\"\"Call CLI commands.\"\"\"
+    fire.Fire()
+"""
+
 
 def dependencies(
     project_name: str,
@@ -68,9 +76,8 @@ def dependencies(
     (source_directory / filename).touch()
     filename = "__main__.py"
     if cli and not (source_directory / filename).exists():
-        with open(template_directory / filename) as f1:
-            with open(source_directory / filename, "w") as f2:
-                f2.write(f1.read())
+        with open(source_directory / filename, "w") as f:
+            f.write(MAIN_TEMPLATE)
     if (output_directory / "pyproject.toml").exists():
         message = (
             "pyproject.toml seems to conflict with our setup.cfg pattern. "
