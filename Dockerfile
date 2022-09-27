@@ -13,20 +13,17 @@ RUN apt install -y \
     curl \
     git
 
-# Install Poetry
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_HOME=/opt/poetry python && \
-    cd /usr/local/bin && \
-    ln -s /opt/poetry/bin/poetry && \
-    poetry config virtualenvs.create false
-  
-COPY pyproject.toml poetry.lock* ./
-
-# Allow installing dev dependencies to run tests
-ARG INSTALL_DEV=true
-RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
+# Allow root for Jupyter notebooks
+RUN mkdir /root/.jupyter
+RUN echo "c.NotebookApp.allow_root = True" > /root/.jupyter/jupyter_notebook_config.py
 
 CMD mkdir -p /code
 WORKDIR /code
-
+RUN mkdir sparrow_patterns && \
+  touch sparrow_patterns/__init__.py
+COPY setup.cfg .
+COPY setup.py .
+RUN pip install -e .
 ADD . .
+
 ENTRYPOINT [ "make" ]

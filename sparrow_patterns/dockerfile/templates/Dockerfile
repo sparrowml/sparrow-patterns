@@ -1,10 +1,6 @@
 {% if deepstream %}FROM nvcr.io/nvidia/deepstream:6.0-triton{% elif gpu %}FROM nvidia/cuda:11.3.1-cudnn8-runtime-ubuntu20.04{% else %}FROM python:3.9{% endif %}
 
-RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && echo $SNIPPET >> "/root/.bashrc"
-
-ENV LANG=C.UTF-8 \
-  LC_ALL=C.UTF-8 \
-  PATH="${PATH}:/root/.poetry/bin"{% if gpu or deepstream %}
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && echo $SNIPPET >> "/root/.bashrc"{% if gpu or deepstream %}
 
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub{% endif %}
 
@@ -41,7 +37,9 @@ RUN cd deepstream_python_apps/bindings && \
 
 RUN rm /usr/bin/python /usr/local/bin/pip
 RUN ln -s /usr/bin/python3.8 /usr/local/bin/python
-RUN ln -s /usr/local/bin/pip3.8 /usr/local/bin/pip{% elif gpu %} # GPU Setup
+RUN ln -s /usr/local/bin/pip3.8 /usr/local/bin/pip{% elif gpu %}
+
+# GPU Setup
 RUN apt-get install -y \
     libcairo2-dev \
     libgl1-mesa-glx \
@@ -57,22 +55,17 @@ RUN pip install --upgrade pip{% endif %}
 
 # Allow root for Jupyter notebooks
 RUN mkdir /root/.jupyter
-RUN echo "c.NotebookApp.allow_root = True" > /root/.jupyter/jupyter_notebook_config.py
+RUN echo "c.NotebookApp.allow_root = True" > /root/.jupyter/jupyter_notebook_config.py{% if gpu %}
 
-# Install Poetry
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_HOME=/opt/poetry python && \
-    cd /usr/local/bin && \
-    ln -s /opt/poetry/bin/poetry && \
-    poetry config virtualenvs.create false
-  
-COPY pyproject.toml poetry.lock* ./
-
-# Allow installing dev dependencies to run tests
-ARG INSTALL_DEV=true
-RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
+ENV PIP_EXTRA_INDEX_URL https://download.pytorch.org/whl/cu113{% endif %}
 
 CMD mkdir -p /code
 WORKDIR /code
-
+RUN mkdir {{ source_directory }} && \
+  touch {{ source_directory }}/__init__.py
+COPY setup.cfg .
+COPY setup.py .
+RUN pip install -e .
 ADD . .
+
 ENTRYPOINT [ "make" ]
