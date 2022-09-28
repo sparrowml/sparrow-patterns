@@ -9,30 +9,13 @@ VERSION := latest
 
 .PHONY: test
 test:
-	PYTHONPATH=$(PYTHONPATH) poetry run pytest -c pyproject.toml --cov={{ source_directory }} {{ source_directory }}/
-
-#* Formatters/Linters
-.PHONY: codestyle
-codestyle:
-	poetry run pyupgrade --exit-zero-even-if-changed --py39-plus **/*.py
-	poetry run isort --settings-path pyproject.toml {{ source_directory }}
-	poetry run black --config pyproject.toml {{ source_directory }}
+	pytest --cov={{ source_directory }} {{ source_directory }}/
 
 .PHONY: check-codestyle
 check-codestyle:
-	poetry run isort --diff --check-only {{ source_directory }}
-	poetry run black --diff --check {{ source_directory }}
-	poetry run pylint {{ source_directory }}
-
-.PHONY: mypy
-mypy:
-	poetry run mypy --config-file pyproject.toml {{ source_directory }}
-
-.PHONY: check-safety
-check-safety:
-	poetry check
-	poetry run safety check --full-report
-	poetry run bandit -ll --recursive {{ source_directory }}
+	isort --diff --check-only {{ source_directory }}
+	black --diff --check {{ source_directory }}
+	pylint {{ source_directory }}
 
 #* Docker
 # Example: make docker-build VERSION=latest
@@ -54,9 +37,14 @@ docker-remove:
 .PHONY: branchify
 branchify:
 ifneq ($(shell git rev-parse --abbrev-ref HEAD),main)
-	poetry version $(shell poetry version -s).dev$(shell date +%s)
+	sed -i "s/^version\s*=\s*[0-9]*\.[0-9]*\.[0-9]*/&.dev$(shell date +%s)/g" setup.cfg
 endif
 
 .PHONY: publish
 publish: branchify
-	poetry publish --build --repository sparrow
+	pip install twine build
+	rm -rf dist
+	python -m build
+	twine upload dist/* --username $(PYPI_USERNAME) --password $(PYPI_PASSWORD)
+	git checkout -- setup.cfg
+	rm -rf dist
