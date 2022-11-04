@@ -12,7 +12,8 @@ RUN apt update -y && apt install -y sudo
 RUN groupadd --gid $USER_GID $USERNAME &&\
  useradd --uid $USER_UID --gid $USER_GID -m $USERNAME &&\  
  echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} &&\
- chmod 0440 /etc/sudoers.d/${USERNAME}
+ chmod 0440 /etc/sudoers.d/${USERNAME} &&\
+ chsh ${USERNAME} -s /bin/bash
 
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && echo $SNIPPET >> "/home/${USERNAME}/.bashrc"
 
