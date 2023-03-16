@@ -3,9 +3,6 @@
 ARG USER=dev
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-
-RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
-  echo $SNIPPET >> "/home/${USER}/.bashrc"
   
 RUN mkdir /commandhistory
 RUN chown -R ${USER} /commandhistory{% if gpu or deepstream %}{% if deepstream %}
@@ -20,6 +17,9 @@ RUN groupadd --gid $USER_GID $USER && \
     echo ${USER} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USER} && \
     chmod 0440 /etc/sudoers.d/${USER} && \
     chsh ${USER} -s /bin/bash
+
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
+  echo $SNIPPET >> "/home/${USER}/.bashrc"
 
 RUN apt update -y
 RUN DEBIAN_FRONTEND=noninteractive apt install -y tzdata

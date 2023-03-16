@@ -4,19 +4,15 @@ ARG USER=dev
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
-  echo $SNIPPET >> "/home/${USER}/.bashrc"
-
-ENV LANG=C.UTF-8 \
-  LC_ALL=C.UTF-8 \
-  PATH="${PATH}:/root/.poetry/bin"
-
 RUN apt update -y && apt install -y sudo
 RUN groupadd --gid $USER_GID $USER && \
     useradd --uid $USER_UID --gid $USER_GID -m $USER && \
     echo ${USER} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USER} && \
     chmod 0440 /etc/sudoers.d/${USER} && \
     chsh ${USER} -s /bin/bash
+
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
+  echo $SNIPPET >> "/home/${USER}/.bashrc"
 
 RUN apt update -y
 RUN DEBIAN_FRONTEND=noninteractive apt install -y tzdata
