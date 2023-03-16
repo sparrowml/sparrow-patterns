@@ -1,8 +1,25 @@
 {% if deepstream %}FROM nvcr.io/nvidia/deepstream:6.0-triton{% elif gpu %}FROM nvidia/cuda:11.3.1-cudnn8-runtime-ubuntu20.04{% else %}FROM python:3.9{% endif %}
 
-RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && echo $SNIPPET >> "/root/.bashrc"{% if gpu or deepstream %}
+ARG USER=dev
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
+  echo $SNIPPET >> "/home/${USER}/.bashrc"
+  
+RUN mkdir /commandhistory
+RUN chown -R ${USER} /commandhistory{% if gpu or deepstream %}{% if deepstream %}
+
+RUN deluser triton-server{% endif %}
 
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub{% endif %}
+
+RUN apt update -y && apt install -y sudo
+RUN groupadd --gid $USER_GID $USER && \
+    useradd --uid $USER_UID --gid $USER_GID -m $USER && \
+    echo ${USER} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USER} && \
+    chmod 0440 /etc/sudoers.d/${USER} && \
+    chsh ${USER} -s /bin/bash
 
 RUN apt update -y
 RUN DEBIAN_FRONTEND=noninteractive apt install -y tzdata
@@ -59,12 +76,15 @@ RUN echo "c.NotebookApp.allow_root = True" > /root/.jupyter/jupyter_notebook_con
 
 ENV PIP_EXTRA_INDEX_URL https://download.pytorch.org/whl/cu113{% endif %}
 
+USER ${USER}
+
 CMD mkdir -p /code
 WORKDIR /code
 RUN mkdir {{ source_directory }} && \
   touch {{ source_directory }}/__init__.py
 COPY setup.cfg .
 COPY setup.py .
+RUN pip install -U pip
 RUN pip install -e .
 ADD . .
 
