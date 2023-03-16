@@ -38,9 +38,13 @@ def devcontainer(
         gpu=gpu,
     )
     for fname in os.listdir(template_directory):
-        if package and fname in (".env.example", ".gitignore"):
+        if package and fname == "gitignore":
             continue
-        output_path = output_directory / fname
+        if fname == "gitignore":
+            write_fname = f".{fname}"
+        else:
+            write_fname = fname
+        output_path = output_directory / write_fname
         with open(template_directory / fname) as f:
             template = env.from_string(f.read())
         with open(output_path, "w") as f:

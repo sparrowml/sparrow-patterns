@@ -44,7 +44,7 @@ def project(
     devcontainer(
         project_name,
         package=False,
-        gpu=gpu,
+        gpu=gpu or deepstream,
         project_directory=project_dir_string,
     )
     dockerfile(
