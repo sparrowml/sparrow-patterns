@@ -11,6 +11,9 @@ RUN groupadd --gid $USER_GID $USER && \
     chmod 0440 /etc/sudoers.d/${USER} && \
     chsh ${USER} -s /bin/bash
 
+RUN mkdir -p /commandhistory
+RUN chown -R ${USER} /commandhistory
+
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
   echo $SNIPPET >> "/home/${USER}/.bashrc"
 

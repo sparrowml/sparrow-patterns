@@ -2,10 +2,7 @@
 
 ARG USER=dev
 ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-  
-RUN mkdir /commandhistory
-RUN chown -R ${USER} /commandhistory{% if gpu or deepstream %}{% if deepstream %}
+ARG USER_GID=$USER_UID{% if gpu or deepstream %}{% if deepstream %}
 
 RUN deluser triton-server{% endif %}
 
@@ -17,6 +14,9 @@ RUN groupadd --gid $USER_GID $USER && \
     echo ${USER} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USER} && \
     chmod 0440 /etc/sudoers.d/${USER} && \
     chsh ${USER} -s /bin/bash
+
+RUN mkdir -p /commandhistory
+RUN chown -R ${USER} /commandhistory
 
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" && \
   echo $SNIPPET >> "/home/${USER}/.bashrc"
