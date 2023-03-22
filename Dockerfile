@@ -24,10 +24,13 @@ RUN apt install -y \
     curl \
     git
 
-USER ${USER}
-
-CMD mkdir -p /code
+RUN mkdir -p /code
+RUN chown -R ${USER} /code
 WORKDIR /code
+
+USER ${USER}
+ENV PATH "${PATH}:/home/${USER}/.local/bin"
+
 RUN mkdir sparrow_patterns && \
   touch sparrow_patterns/__init__.py
 COPY setup.cfg .

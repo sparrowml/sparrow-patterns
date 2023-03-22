@@ -76,10 +76,13 @@ RUN echo "c.NotebookApp.allow_root = True" > /root/.jupyter/jupyter_notebook_con
 
 ENV PIP_EXTRA_INDEX_URL https://download.pytorch.org/whl/cu113{% endif %}
 
-USER ${USER}
-
-CMD mkdir -p /code
+RUN mkdir -p /code
+RUN chown -R ${USER} /code
 WORKDIR /code
+
+USER ${USER}
+ENV PATH "${PATH}:/home/${USER}/.local/bin"
+
 RUN mkdir {{ source_directory }} && \
   touch {{ source_directory }}/__init__.py
 COPY setup.cfg .
