@@ -42,18 +42,17 @@
                 "ms-python.isort",
                 "ms-python.python",
                 "ms-python.vscode-pylance",
-            ],
+            ],            
         }
     },
-	"mounts": [
+    "mounts": [
         "source=projectname-bashhistory,target=/commandhistory,type=volume",
-        "source=${localEnv:HOME}/.ssh,target=/home/${localEnv:USER}/.ssh,type=bind,consistency=cached,readonly",
-        "source=${localEnv:HOME}/.gitconfig,target=/home/${localEnv:USER}/.gitconfig,type=bind,consistency=cached,readonly",		
-	],
+    ],
     "workspaceFolder": "/code",
     "workspaceMount": "source=${localWorkspaceFolder},target=/code,type=bind,consistency=cached",
     "runArgs": [
         "--ipc=host",
+        // "--env-file=.devcontainer/.env"
     ],
-    "postCreateCommand": "pip install -e .[dev] --user",
+    "postCreateCommand": "pip install -e .[dev]",
 }
