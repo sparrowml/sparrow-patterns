@@ -8,39 +8,43 @@
         }
     },
     "containerUser": "1000",
-    "settings": {
-        "python.pythonPath": "/usr/local/bin/python",
-        "python.languageServer": "Pylance",
-        "python.linting.enabled": true,
-        // pydocstyle
-        "python.linting.pydocstyleEnabled": true,
-        "python.linting.pydocstylePath": "/home/${localEnv:USER}/.local/bin/pydocstyle",
-        // black
-        "python.formatting.blackPath": "/home/${localEnv:USER}/.local/bin/black",
-        "python.formatting.provider": "black",
-        "[python]": {
-            "editor.formatOnSave": true,
-            "editor.codeActionsOnSave": {
-                "source.organizeImports": true
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.pythonPath": "/usr/local/bin/python",
+                "python.languageServer": "Pylance",
+                "python.linting.enabled": true,
+                // pydocstyle
+                "python.linting.pydocstyleEnabled": true,
+                "python.linting.pydocstylePath": "/home/${localEnv:USER}/.local/bin/pydocstyle",
+                // black
+                "python.formatting.blackPath": "/home/${localEnv:USER}/.local/bin/black",
+                "python.formatting.provider": "black",
+                "[python]": {
+                    "editor.formatOnSave": true,
+                    "editor.codeActionsOnSave": {
+                        "source.organizeImports": true
+                    },
+                },
+                // isort
+                "isort.path": ["/home/${localEnv:USER}/.local/bin/isort"],
+                // pylint
+                "python.linting.pylintEnabled": true,
+                "python.linting.pylintPath": "/home/${localEnv:USER}/.local/bin/pylint",
+                // pytest
+                "python.testing.pytestArgs": [
+                    "sparrow_patterns"
+                ],
+                "python.testing.pytestEnabled": true,
             },
-        },
-        // isort
-        "python.sortImports.path": "/home/${localEnv:USER}/.local/bin/isort",
-        // pylint
-        "python.linting.pylintEnabled": true,
-        "python.linting.pylintPath": "/home/${localEnv:USER}/.local/bin/pylint",
-        // pytest
-        "python.testing.pytestArgs": [
-            "sparrow_patterns"
-        ],
-        "python.testing.pytestEnabled": true,
+            "extensions": [
+                "GitHub.copilot",
+                "ms-python.isort",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+            ],
+        }
     },
-    "extensions": [
-		"GitHub.copilot",
-		"ms-python.isort",
-		"ms-python.python",
-		"ms-python.vscode-pylance",
-	],
 	"mounts": [
         "source=projectname-bashhistory,target=/commandhistory,type=volume",
         "source=${localEnv:HOME}/.ssh,target=/home/${localEnv:USER}/.ssh,type=bind,consistency=cached,readonly",
