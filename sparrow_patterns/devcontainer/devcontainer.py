@@ -8,7 +8,6 @@ from sparrow_patterns.utils import get_source_directory
 
 def devcontainer(
     project_name: str,
-    package: bool = False,
     gpu: bool = False,
     project_directory: str = ".",
 ) -> None:
@@ -19,8 +18,6 @@ def devcontainer(
     ----------
     project_name
         The slug for the project. Should be the same as the GitHub repo.
-    package
-        Whether this is for a Python package
     gpu
         Whether to make the GPU available
     project_directory
@@ -32,19 +29,10 @@ def devcontainer(
     output_directory = Path(project_directory) / ".devcontainer"
     output_directory.mkdir(exist_ok=True)
     template_variables = dict(
-        project_name=project_name,
-        source_directory=source_directory,
-        package=package,
-        gpu=gpu,
+        project_name=project_name, source_directory=source_directory, gpu=gpu
     )
     for fname in os.listdir(template_directory):
-        if package and fname == "gitignore":
-            continue
-        if fname == "gitignore":
-            write_fname = f".{fname}"
-        else:
-            write_fname = fname
-        output_path = output_directory / write_fname
+        output_path = output_directory / fname
         with open(template_directory / fname) as f:
             template = env.from_string(f.read())
         with open(output_path, "w") as f:

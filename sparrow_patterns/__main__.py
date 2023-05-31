@@ -7,7 +7,6 @@ from .github import github
 from .gitignore import gitignore
 from .makefile import makefile
 from .notebooks import notebooks
-from .package import package
 from .project import project
 from .readme import readme
 from .vscode import vscode
@@ -24,7 +23,6 @@ def main() -> None:
             "gitignore": gitignore,
             "makefile": makefile,
             "notebooks": notebooks,
-            "package": package,
             "project": project,
             "readme": readme,
             "vscode": vscode,

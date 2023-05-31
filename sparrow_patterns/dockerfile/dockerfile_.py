@@ -9,7 +9,6 @@ from sparrow_patterns.utils import get_source_directory
 def dockerfile(
     project_name: str,
     gpu: bool = False,
-    deepstream: bool = False,
     project_directory: str = ".",
 ) -> None:
     """
@@ -19,8 +18,6 @@ def dockerfile(
     ----------
     gpu
         Whether to make the GPU available
-    deepstream
-        Whether to set up project for DeepStream
     project_directory
         Where to create the .devcontainer folder. Defaults to working directory.
     """
@@ -28,11 +25,7 @@ def dockerfile(
     env = Environment(autoescape=True)
     template_directory = Path(__file__).parent / "templates"
     output_directory = Path(project_directory)
-    template_variables = dict(
-        gpu=gpu,
-        deepstream=deepstream,
-        source_directory=source_directory,
-    )
+    template_variables = dict(gpu=gpu, source_directory=source_directory)
     for fname in os.listdir(template_directory):
         output_path = output_directory / fname
         with open(template_directory / fname) as f:

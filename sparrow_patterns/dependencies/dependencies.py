@@ -22,7 +22,6 @@ def dependencies(
     license: Optional[str] = None,
     author_name: str = "Sparrow Computing",
     author_email: str = "ben@sparrow.dev",
-    cli: bool = False,
     project_directory: str = ".",
 ) -> None:
     """
@@ -42,8 +41,6 @@ def dependencies(
         Project author name
     author_email
         Project author email
-    cli
-        Whether this is for a CLI.
     project_directory
         Where to write the files. Defaults to working directory.
     """
@@ -60,7 +57,6 @@ def dependencies(
         license=license,
         author_name=author_name,
         author_email=author_email,
-        cli=cli,
     )
     filename = "setup.cfg"
     with open(template_directory / filename) as f:
@@ -75,7 +71,7 @@ def dependencies(
     filename = "__init__.py"
     (source_directory / filename).touch()
     filename = "__main__.py"
-    if cli and not (source_directory / filename).exists():
+    if not (source_directory / filename).exists():
         with open(source_directory / filename, "w") as f:
             f.write(MAIN_TEMPLATE)
     if (output_directory / "pyproject.toml").exists():

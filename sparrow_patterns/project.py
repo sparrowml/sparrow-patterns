@@ -6,6 +6,7 @@ from slugify import slugify
 from .dependencies import dependencies
 from .devcontainer import devcontainer
 from .dockerfile import dockerfile
+from .github import github
 from .gitignore import gitignore
 from .makefile import makefile
 from .readme import readme
@@ -20,9 +21,7 @@ def project(
     license: Optional[str] = None,
     author_name: str = "Sparrow Computing",
     author_email: str = "ben@sparrow.dev",
-    cli: bool = False,
     gpu: bool = False,
-    deepstream: bool = False,
     parent_directory: str = ".",
 ) -> None:
     """Create a new Python package."""
@@ -38,21 +37,19 @@ def project(
         license=license,
         author_name=author_name,
         author_email=author_email,
-        cli=cli,
         project_directory=project_dir_string,
     )
     devcontainer(
         project_name,
-        package=False,
-        gpu=gpu or deepstream,
+        gpu=gpu,
         project_directory=project_dir_string,
     )
     dockerfile(
         project_name,
         gpu=gpu,
-        deepstream=deepstream,
         project_directory=project_dir_string,
     )
+    github(project_dir_string)
     gitignore(project_dir_string)
     makefile(project_name, project_directory=project_dir_string)
     readme(project_name, project_directory=project_dir_string)
