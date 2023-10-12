@@ -23,7 +23,7 @@
                 "isort.args":["--profile", "black"],
                 // pytest
                 "python.testing.pytestArgs": [
-                    "crns_pipeline"
+                    "sparrow_patterns"
                 ],
                 "python.testing.pytestEnabled": true,
             },

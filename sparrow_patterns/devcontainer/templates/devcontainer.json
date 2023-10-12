@@ -23,7 +23,7 @@
                 "isort.args":["--profile", "black"],
                 // pytest
                 "python.testing.pytestArgs": [
-                    "crns_pipeline"
+                    "{{ source_directory }}"
                 ],
                 "python.testing.pytestEnabled": true,
             },
