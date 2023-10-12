@@ -13,33 +13,26 @@
             "settings": {
                 "python.pythonPath": "/usr/local/bin/python",
                 "python.languageServer": "Pylance",
-                "python.linting.enabled": true,
-                // pydocstyle
-                "python.linting.pydocstyleEnabled": true,
-                "python.linting.pydocstylePath": "/home/${localEnv:USER}/.local/bin/pydocstyle",
-                // black
-                "python.formatting.blackPath": "/home/${localEnv:USER}/.local/bin/black",
-                "python.formatting.provider": "black",
                 "[python]": {
-                    "editor.formatOnSave": true,
+                    "editor.defaultFormatter": "ms-python.black-formatter",
                     "editor.codeActionsOnSave": {
                         "source.organizeImports": true
                     },
+                    "editor.formatOnSave": true,
                 },
-                // isort
-                "isort.path": ["/home/${localEnv:USER}/.local/bin/isort"],
-                // pylint
-                "python.linting.pylintEnabled": true,
-                "python.linting.pylintPath": "/home/${localEnv:USER}/.local/bin/pylint",
+                "isort.args":["--profile", "black"],
                 // pytest
                 "python.testing.pytestArgs": [
-                    "sparrow_patterns"
+                    "crns_pipeline"
                 ],
                 "python.testing.pytestEnabled": true,
             },
             "extensions": [
                 "GitHub.copilot",
+                "mechatroner.rainbow-csv",
+                "ms-python.black-formatter",
                 "ms-python.isort",
+                "ms-python.pylint",
                 "ms-python.python",
                 "ms-python.vscode-pylance",
             ],            
