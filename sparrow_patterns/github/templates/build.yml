@@ -17,12 +17,6 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Install dependencies
-      run: |
-        pip install .[dev]
-    - name: Run style checks
-      run: |
-        make check-codestyle
     - name: Publish package
       env:
         PYPI_USERNAME: __token__

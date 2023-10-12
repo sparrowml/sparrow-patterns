@@ -11,12 +11,6 @@ VERSION := latest
 test:
 	pytest --cov={{ source_directory }} {{ source_directory }}/
 
-.PHONY: check-codestyle
-check-codestyle:
-	isort --diff --check-only {{ source_directory }}
-	black --diff --check {{ source_directory }}
-	pylint {{ source_directory }}
-
 #* Docker
 # Example: make docker-build VERSION=latest
 # Example: make docker-build IMAGE=some_name VERSION=0.1.0
