@@ -12,9 +12,10 @@ def vscode(project_directory: str = ".") -> None:
     """
     template_directory = Path(__file__).parent / "templates"
     output_directory = Path(project_directory) / ".vscode"
-    filename = "launch.json"
+    filename_stem = ["extensions", "launch", "settings"]
     output_directory.mkdir(exist_ok=True)
-    with open(template_directory / filename) as f:
-        file_string = f.read()
-    with open(output_directory / filename, "w") as f:
-        f.write(file_string)
+    for stem in filename_stem:
+        filename = f"{stem}.json"
+        with open(template_directory / filename) as f1:
+            with open(output_directory / filename, "w") as f2:
+                f2.write(f1.read())
