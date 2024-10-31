@@ -53,4 +53,4 @@ def project(
     gitignore(project_dir_string)
     makefile(project_name, project_directory=project_dir_string)
     readme(project_name, project_directory=project_dir_string)
-    vscode(project_dir_string)
+    vscode(project_name, project_dir_string)
