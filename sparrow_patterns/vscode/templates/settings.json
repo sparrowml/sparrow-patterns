@@ -20,6 +20,6 @@
       "source.organizeImports": "explicit"
     }
   },
-  "python.testing.pytestArgs": ["sparrow_patterns"],
+  "python.testing.pytestArgs": ["{{ source_directory }}"],
   "python.testing.pytestEnabled": true
 }
