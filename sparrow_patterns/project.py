@@ -39,11 +39,6 @@ def project(
         author_email=author_email,
         project_directory=project_dir_string,
     )
-    devcontainer(
-        project_name,
-        gpu=gpu,
-        project_directory=project_dir_string,
-    )
     dockerfile(
         project_name,
         gpu=gpu,

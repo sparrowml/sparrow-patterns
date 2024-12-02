@@ -1,4 +1,4 @@
-{% if gpu %}FROM nvidia/cuda:11.3.1-cudnn8-runtime-ubuntu20.04{% else %}FROM python:3.9{% endif %}
+{% if gpu %}FROM nvidia/cuda:11.3.1-cudnn8-runtime-ubuntu20.04{% else %}FROM python:3.12{% endif %}
 
 ARG USER=dev
 ARG USER_UID=1000
