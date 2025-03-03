@@ -28,7 +28,6 @@
                 "python.testing.pytestEnabled": true,
             },
             "extensions": [
-                "GitHub.copilot",
                 "mechatroner.rainbow-csv",
                 "ms-python.black-formatter",
                 "ms-python.isort",
