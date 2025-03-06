@@ -33,8 +33,7 @@ ENV PATH "${PATH}:/home/${USER}/.local/bin"
 
 RUN mkdir sparrow_patterns && \
   touch sparrow_patterns/__init__.py
-COPY setup.cfg .
-COPY setup.py .
+COPY pyproject.toml .
 RUN pip install -U pip
 RUN pip install -e .
 ADD . .

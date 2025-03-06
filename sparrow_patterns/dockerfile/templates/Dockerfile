@@ -51,8 +51,7 @@ ENV PATH "${PATH}:/home/${USER}/.local/bin"
 
 RUN mkdir {{ source_directory }} && \
   touch {{ source_directory }}/__init__.py
-COPY setup.cfg .
-COPY setup.py .
+COPY pyproject.toml .
 RUN pip install -U pip
 RUN pip install -e .
 ADD . .

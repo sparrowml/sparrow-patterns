@@ -1,32 +1,6 @@
-#* Variables
-SHELL := /usr/bin/env bash
-PYTHON := python
-PYTHONPATH := `pwd`
-
-#* Docker variables
-IMAGE := {{ project_name }}
-VERSION := latest
-
 .PHONY: test
 test:
 	pytest --cov={{ source_directory }} {{ source_directory }}/
-
-#* Docker
-# Example: make docker-build VERSION=latest
-# Example: make docker-build IMAGE=some_name VERSION=0.1.0
-.PHONY: docker-build
-docker-build:
-	@echo Building docker $(IMAGE):$(VERSION) ...
-	docker build \
-		-t $(IMAGE):$(VERSION) . \
-		--no-cache
-
-# Example: make docker-remove VERSION=latest
-# Example: make docker-remove IMAGE=some_name VERSION=0.1.0
-.PHONY: docker-remove
-docker-remove:
-	@echo Removing docker $(IMAGE):$(VERSION) ...
-	docker rmi -f $(IMAGE):$(VERSION)
 
 .PHONY: branchify
 branchify:
@@ -50,7 +24,18 @@ publish: branchify
 
 .PHONY: freeze
 freeze:
-	uv pip compile -q -o requirements.txt setup.cfg
+	uv pip compile -q -o requirements.txt pyproject.toml
 	echo "-e ." >> requirements.txt
-	uv pip compile -q --extra dev -o requirements-dev.txt setup.cfg
+	uv pip compile -q --extra dev -o requirements-dev.txt pyproject.toml
 	echo "-e ." >> requirements-dev.txt
+
+
+.PHONY: init
+init:
+	conda create -y -n {{ project_name }} python=3.12 pip
+	conda activate {{ project_name }}
+	pip install -U pip uv
+	make freeze
+	git init
+	git add .
+	git commit -m "first commit :rocket:"
