@@ -34,8 +34,7 @@ ENV PATH "${PATH}:/home/${USER}/.local/bin"
 RUN mkdir sparrow_patterns && \
   touch sparrow_patterns/__init__.py
 COPY pyproject.toml .
+COPY requirements.txt .
 RUN pip install -U pip
-RUN pip install -e .
+RUN pip install -r requirements.txt
 ADD . .
-
-ENTRYPOINT [ "make" ]

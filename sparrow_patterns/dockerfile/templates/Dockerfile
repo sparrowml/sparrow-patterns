@@ -52,8 +52,8 @@ ENV PATH "${PATH}:/home/${USER}/.local/bin"
 RUN mkdir {{ source_directory }} && \
   touch {{ source_directory }}/__init__.py
 COPY pyproject.toml .
+COPY requirements.txt .
 RUN pip install -U pip
-RUN pip install -e .
+RUN pip install -r requirements.txt
 ADD . .
 
-ENTRYPOINT [ "make" ]

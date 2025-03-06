@@ -39,7 +39,7 @@ freeze:
 init:
 	conda create -y -n {{ project_name }} python=3.12 pip
 	conda init
-	$(CONDA_ACTIVATE) {{ project_name }} ; pip install -U pip uv ; make freeze
+	$(CONDA_ACTIVATE) {{ project_name }} ; pip install -U pip uv ; make freeze ; pip install -r requirements-dev.txt
 	git init
 	git add .
 	git commit -m "first commit :rocket:"

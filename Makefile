@@ -39,7 +39,7 @@ freeze:
 init:
 	conda create -y -n sparrow-patterns python=3.12 pip
 	conda init
-	$(CONDA_ACTIVATE) sparrow-patterns ; pip install -U pip uv ; make freeze
+	$(CONDA_ACTIVATE) sparrow-patterns ; pip install -U pip uv ; make freeze ; pip install -r requirements-dev.txt
 	git init
 	git add .
 	git commit -m "first commit :rocket:"
