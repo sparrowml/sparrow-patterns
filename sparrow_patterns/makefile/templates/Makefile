@@ -31,7 +31,12 @@ docker-remove:
 .PHONY: branchify
 branchify:
 ifneq ($(shell git rev-parse --abbrev-ref HEAD),main)
-	sed -i "s/^version\s*=\s*[0-9]*\.[0-9]*\.[0-9]*/&.dev$(shell date +%s)/g" setup.cfg
+	# Create a portable sed command that works on both Linux and macOS
+	if [ "$(shell uname)" = "Darwin" ]; then \
+		sed -i '' 's/version = "\([0-9]*\.[0-9]*\.[0-9]*\)"/version = "\1.dev$(shell date +%s)"/g' pyproject.toml; \
+	else \
+		sed -i 's/version = "\([0-9]*\.[0-9]*\.[0-9]*\)"/version = "\1.dev$(shell date +%s)"/g' pyproject.toml; \
+	fi
 endif
 
 .PHONY: publish
@@ -40,7 +45,7 @@ publish: branchify
 	rm -rf dist
 	python -m build
 	twine upload dist/* --username $(PYPI_USERNAME) --password $(PYPI_PASSWORD)
-	git checkout -- setup.cfg
+	git checkout -- pyproject.toml
 	rm -rf dist
 
 .PHONY: freeze

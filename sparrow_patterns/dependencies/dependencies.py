@@ -25,7 +25,7 @@ def dependencies(
     project_directory: str = ".",
 ) -> None:
     """
-    Write setup.cfg and setup.py for the project.
+    Write pyproject.toml for the project.
 
     Parameters
     ----------
@@ -58,15 +58,15 @@ def dependencies(
         author_name=author_name,
         author_email=author_email,
     )
-    filename = "setup.cfg"
+
+    # Create pyproject.toml
+    filename = "pyproject.toml"
     with open(template_directory / filename) as f:
         template = env.from_string(f.read())
     with open(output_directory / filename, "w") as f:
         f.write(template.render(**template_variables))
-    filename = "setup.py"
-    with open(template_directory / filename) as f1:
-        with open(output_directory / filename, "w") as f2:
-            f2.write(f1.read())
+
+    # Create source directory and files
     source_directory.mkdir(parents=True, exist_ok=True)
     filename = "__init__.py"
     (source_directory / filename).touch()
@@ -74,9 +74,13 @@ def dependencies(
     if not (source_directory / filename).exists():
         with open(source_directory / filename, "w") as f:
             f.write(MAIN_TEMPLATE)
-    if (output_directory / "pyproject.toml").exists():
+
+    # Check for legacy files
+    if (output_directory / "setup.cfg").exists() or (
+        output_directory / "setup.py"
+    ).exists():
         message = (
-            "pyproject.toml seems to conflict with our setup.cfg pattern. "
-            "You might want to delete it."
+            "setup.cfg and setup.py are no longer needed with pyproject.toml. "
+            "You might want to delete them."
         )
         warnings.warn(message)
