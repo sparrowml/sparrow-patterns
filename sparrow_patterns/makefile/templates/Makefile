@@ -1,17 +1,22 @@
+SHELL=/bin/bash
+CONDA_ACTIVATE=source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
+
 .PHONY: test
 test:
 	pytest --cov={{ source_directory }} {{ source_directory }}/
 
 .PHONY: branchify
 branchify:
-ifneq ($(shell git rev-parse --abbrev-ref HEAD),main)
-	# Create a portable sed command that works on both Linux and macOS
-	if [ "$(shell uname)" = "Darwin" ]; then \
-		sed -i '' 's/version = "\([0-9]*\.[0-9]*\.[0-9]*\)"/version = "\1.dev$(shell date +%s)"/g' pyproject.toml; \
-	else \
-		sed -i 's/version = "\([0-9]*\.[0-9]*\.[0-9]*\)"/version = "\1.dev$(shell date +%s)"/g' pyproject.toml; \
+	if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then \
+		if [ "$(shell git rev-parse --abbrev-ref HEAD)" != "main" ]; then \
+			# Create a portable sed command that works on both Linux and macOS \
+			if [ "$(shell uname)" = "Darwin" ]; then \
+				sed -i '' 's/version = "\([0-9]*\.[0-9]*\.[0-9]*\)"/version = "\1.dev$(shell date +%s)"/g' pyproject.toml; \
+			else \
+				sed -i 's/version = "\([0-9]*\.[0-9]*\.[0-9]*\)"/version = "\1.dev$(shell date +%s)"/g' pyproject.toml; \
+			fi \
+		fi \
 	fi
-endif
 
 .PHONY: publish
 publish: branchify
@@ -33,9 +38,8 @@ freeze:
 .PHONY: init
 init:
 	conda create -y -n {{ project_name }} python=3.12 pip
-	conda activate {{ project_name }}
-	pip install -U pip uv
-	make freeze
+	conda init
+	$(CONDA_ACTIVATE) {{ project_name }} ; pip install -U pip uv ; make freeze
 	git init
 	git add .
 	git commit -m "first commit :rocket:"
