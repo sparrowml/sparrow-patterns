@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sparrow-patterns"
-version = "0.8.0"
+version = "0.8.1"
 description = "A CLI for updating code patterns in Python projects"
 authors = [
     {name = "Sparrow Computing", email = "ben@sparrow.dev"},

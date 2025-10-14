@@ -1,6 +1,6 @@
 
 SHELL=/bin/bash
-CONDA_ACTIVATE=source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
+VENV_ACTIVATE=source venv/bin/activate
 
 .PHONY: test
 test:
@@ -37,9 +37,8 @@ freeze:
 
 .PHONY: init
 init:
-	conda create -y -n sparrow-patterns python=3.12 pip
-	conda init
-	$(CONDA_ACTIVATE) sparrow-patterns ; pip install -U pip uv ; make freeze ; pip install -r requirements-dev.txt
+	python3.12 -m venv venv
+	$(VENV_ACTIVATE) ; pip install -U pip uv ; make freeze ; pip install -r requirements-dev.txt
 	git init
 	git add .
 	git commit -m "first commit :rocket:"
